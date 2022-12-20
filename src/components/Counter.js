@@ -1,22 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Counter(props) {
-    // const [count, setCount] = useState(props.default ? props.default : 0)
-    // const [count, setCount] = useState(props.default ?? 0)
-/*     let initialCount = 0
-
-    if (props.default) {
-        initialCount = props.default
-    }
-
-    const [count, setCount] = useState(initialCount) */
     const [count, setCount] = useState(props.default || 0)
-    
-    /* 
-    * Define a prop of name, and display the counter's "name"
-    * in the JSX output, above the count itself. If there is no
-    * name prop passed in, set the name to "Default Counter"
-    */
   
     function increment(incrementor) {
       setCount(count + incrementor)
