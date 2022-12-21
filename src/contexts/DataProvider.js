@@ -21,8 +21,16 @@ export const DataProvider = function(props) {
         return data
     }
 
+        
+    async function fetchPokemon(parameter) {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${parameter}`)
+        const data = await response.json()
+        return data
+    }
+
     const value = {
         posts,
+        fetchPokemon,
         loadPost
     }
 

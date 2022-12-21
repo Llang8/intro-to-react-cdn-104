@@ -1,30 +1,29 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { DataContext } from '../contexts/DataProvider'
 
 export default function Pokemon() {
     const [pokemon, setPokemon] = useState({})
     const [loadState, setLoadState] = useState("LOADING")
-    
-    async function fetchPokemon(parameter) {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${parameter}`)
-        const data = await response.json()
-        console.log("API REQUEST")
-        // setPokemonId(data.id)
-        setPokemon(data)
-        /* setPokemonQuery("") */
-        setLoadState("LOADED")
-    }
+
+    const { fetchPokemon } = useContext(DataContext)
 
     useEffect(() => {
-        fetchPokemon(1)
+        async function getFirstPokemon() {
+            const data = await fetchPokemon(1)
+            setPokemon(data)
+            setLoadState("LOADED")
+        }
+        getFirstPokemon()
     }, [])
 
-    function searchPokemon(event) {
+    async function searchPokemon(event) {
         event.preventDefault()
         const formData = new FormData(event.target)
         console.log(formData.get('pokemonName'))
 
-        fetchPokemon(formData.get('pokemonName'))
-
+        const data = await fetchPokemon(formData.get('pokemonName'))
+        setPokemon(data)
+        setLoadState("LOADED")
         event.target.reset()
     }
 
@@ -48,15 +47,19 @@ export default function Pokemon() {
             }
             {
                 (pokemon.id > 1) ?
-                <button onClick={() => {
+                <button onClick={async () => {
                     pokemon.id--
-                    fetchPokemon(pokemon.id)
+                    const data = await fetchPokemon(pokemon.id)
+                    setPokemon(data)
+                    setLoadState("LOADED")                   
                 }}>Previous Pokemon</button>
                 : <></>
             }
-            <button onClick={() => {
+            <button onClick={async () => {
                     pokemon.id++
-                    fetchPokemon(pokemon.id)
+                    const data = await fetchPokemon(pokemon.id)
+                    setPokemon(data)
+                    setLoadState("LOADED")     
             }}>Next Pokemon</button>
         </div>
     )
