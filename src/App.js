@@ -1,16 +1,20 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Counter from './components/Counter';
 import Students from './components/Students';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Pokemon from './components/Pokemon';
 import Blog from './views/Blog';
 import BlogSingle from './views/BlogSingle'
+import { AuthContext } from './contexts/AuthProvider'
 
 export default function App() {
+  const { login, logout, user } = useContext(AuthContext)
+
   return (
     <div className="App">
+      <h2>Loggedin User: { user.username }</h2>
       <BrowserRouter>
         <nav>
           <ul>
@@ -19,6 +23,11 @@ export default function App() {
             <li><Link to="/blog">Blog</Link></li>
             <li><Link to="/students">Students</Link></li>
             <li><Link to="/pokemon">Pokemon</Link></li>
+            {
+              (user.loggedIn) ?
+              <li><button onClick={logout}>Logout</button></li> :
+              <li><button onClick={login}>Login</button></li>
+            }
           </ul>
         </nav>
         <Routes>
