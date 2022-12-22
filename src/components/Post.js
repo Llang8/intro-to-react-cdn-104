@@ -5,7 +5,7 @@ export default function Post(props) {
     function buildTitle() {
         if (props.showLink) {
             return (
-                <h2><Link to={ `/blog/${props.post.id}` }>{ props.post.title }</Link></h2>
+                <h2><Link to={ `/blog/${props.post.uid}/${props.post.id}` }>{ props.post.title }</Link></h2>
             )
         } else {
             return (

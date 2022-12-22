@@ -37,7 +37,9 @@ export default function App() {
           <Route path="/pokemon" element={<Pokemon />} />
           {/* <Route path="/blog" element={<Blog />} /> */}
           <Route path="/blog">
-            <Route path=":id" element={<BlogSingle />} />
+            <Route path=":uid">
+              <Route path=":id" element={<BlogSingle />} />
+            </Route>
             <Route path="" element={<Blog />} />
           </Route>
         </Routes>
